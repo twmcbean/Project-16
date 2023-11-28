@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8" />
+   <title>My Basic Form</title>
+</head>
+<body>
+   <h1 style="text-align:center;">Newsletter Sign-Up</h1>
+   <form name="MyForm" method="Post" action="thankyou.html">
+     <div style="text-align:center;">
+     <input type="text" name="fullname" placeholder="Your name">
+     <input type="text" name="email" placeholder="Your email">
+     <input type="text" name="phone" placeholder="Your phone number" maxlength="12">
+     <input type="submit" name="submit" value="Submit" onClick="javascript:return validateInputs();">
+    </div>
+   </form>
+<script>
+function validateInputs() {
+    var SubmitForm;
+    var FormErrors;
+    SubmitForm = true;
+    var fullname = new String(document.MyForm.fullname.value);
+    var email = new String(document.MyForm.email.value);
+    var phone = new String(document.MyForm.phone.value);
+    if (fullname.length < 1 || email.length < 1 || phone.length < 1) {
+        FormErrors = "All fields are mandatory. Please complete the form.";
+        SubmitForm = false;
+    } else {
+        var filter = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        if (!filter.test(email)) {
+            FormErrors = "Your form contains invalid field entries. Please correct your form before submitting.";
+            SubmitForm = false;
+        }
+        var phoneFilter = /^[0-9-]+$/;
+        if (!phoneFilter.test(phone)) {
+            FormErrors = "Please enter a valid phone number (only numbers and dashes allowed).";
+            SubmitForm = false;
+        }
+    }
+    if (SubmitForm == false) {
+        alert(FormErrors);
+        return false;
+    } else {
+        fullname = fullname.replace(/[^a-z0-9\s\-]/gim, "");
+        fullname = fullname.trim();
+        email = email.replace(/[^a-z0-9_@.-]/gim, "");
+        email = email.trim();
+        phone = phone.replace(/[^0-9-]/gim, "");
+        phone = phone.trim();
+        document.MyForm.submit();
+    }
+}
+</script>
+</body>
+</html>
